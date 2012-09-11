@@ -15,6 +15,9 @@ Here are the key features:
 
 * Simple to use, just add your Facebook file page name
 
+= Installation Instructions =
+Go to http://wordpress.org/extend/plugins/facebook-album-sync/installation/.
+
 == Installation ==
 
 1. Upload `plugin-name.php` to the `/wp-content/plugins/` directory
@@ -23,9 +26,14 @@ Here are the key features:
 
 == Frequently Asked Questions ==
 
+= How Does the plugin work =
+Go to http://wordpress.org/extend/plugins/facebook-album-sync/installation/ for instructions.
+
 = Do you offer support =
 
-No, but you can email me for bugs and suggestions and wordpress customization services at www.keithics.com
+We do offer support via the forum for now, but you can also visit www.miiweb.net for assistance.
+
+
 
 == Screenshots ==
 
@@ -45,4 +53,4 @@ No, but you can email me for bugs and suggestions and wordpress customization se
 == How to ==
 
 1. To use go to the Settings page then enter your Facebook page there.
-2. Copy the short code to your page
+2. Copy the short code to your page: [fbalbumsync]
