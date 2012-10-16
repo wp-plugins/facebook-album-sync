@@ -27,7 +27,7 @@ Go to http://wordpress.org/extend/plugins/facebook-album-sync/installation/.
 == Frequently Asked Questions ==
 
 = How Does the plugin work =
-Go to http://wordpress.org/extend/plugins/facebook-album-sync/installation/ for instructions.
+Go to [Installation](http://wordpress.org/extend/plugins/facebook-album-sync/installation/ “Installation Information”) for instructions.
 
 = Do you offer support =
 
