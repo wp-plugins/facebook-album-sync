@@ -12,7 +12,7 @@
 					var fbpagename = "<?php echo get_option('fbas_page') ?>";
 					var prettypermalinkon = "<?php echo $prettypermalinkon; ?>"; 
 					var curhtml ="";
-					var loadingImage = "<br /><img id=\"fbloader\"src=\"<?php echo plugins_url();?>/facebook-albums-sync/images/fbloader.gif\" /><br />" ;
+					var loadingImage = "<br /><img id=\"fbloader\"src=\"<?php echo plugins_url();?>/facebook-album-sync/images/fbloader.gif\" /><br />" ;
 					addhtml(loadingImage);			
 					getAlbumPage("https://graph.facebook.com/"+fbpagename+"/albums/");
 					
@@ -46,12 +46,12 @@
 					// album by album get the links and then process the albums 
 					// one by one
 							try{ // test if album as a cover photo
-								var coverPhotograph = 'https://graph.facebook.com/'+data.data[i].cover_photo;
-								}catch(err)
-								{
+									var coverPhotograph = 'https://graph.facebook.com/'+data.data[i].cover_photo;
+							
+								}catch(err){
 									addhtml(curhtml);
-								curhtml ="";
-								console.log(err);
+									curhtml ="";
+									console.log(err);
 								}
 								
 							jQuery.ajax({
@@ -119,6 +119,7 @@
 													}else{
 														jQuery('#fbloader').remove();
 													}
+													jQuery('#fbloader').remove();
 											  }
 											catch(err)
 											  {
