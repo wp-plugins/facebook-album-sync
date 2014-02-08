@@ -9,11 +9,17 @@
 <script type="text/javascript">
 					var ALbumsCount = 1;
 					var rowItemscnt = 1;
+					var excludeAlbums = "<?php echo $exclude;  ?>".split(",");
+
+					for (albumid in excludeAlbums){
+    					excludeAlbums[albumid] = excludeAlbums[albumid].trim();
+					}
 					var fbpagename = "<?php echo get_option('fbas_page') ?>";
 					var prettypermalinkon = "<?php echo $prettypermalinkon; ?>"; 
 					var curhtml ="";
-					var loadingImage = "<br /><img id=\"fbloader\"src=\"<?php echo plugins_url();?>/facebook-album-sync/images/fbloader.gif\" /><br />" ;
-					addhtml(loadingImage);			
+					var loadingImage = "<div id='fbloader'></div>" ;
+					addhtml(loadingImage);
+			
 					getAlbumPage("https://graph.facebook.com/"+fbpagename+"/albums/");
 					
 
@@ -22,6 +28,7 @@
 						//console.log("do print: "+html);
 						document.getElementById('fbalbumsync').innerHTML += html;
 					}
+
 					function getAlbumPage(fbGraphUrl)
 					{
 						jQuery.ajax({
@@ -41,10 +48,26 @@
 					// it calls the facbook to get the cover photo url 
 					// is there a way to get the url by just using standard url 
 					// structure? like just plug it in http://facebook.com/photo/".id."/
-					function getAlbums(data, i)
-					{
+					function getAlbums(data, i)	{
+
+					//skip if album is excluded
+					arrayIndex = jQuery.inArray( data.data[i].id  , excludeAlbums );
+
+					if(arrayIndex !== -1 ){
+
+						if (i < data.data.length - 1){
+							i++;
+							//console.log("<< Get Next Album>>");
+							getAlbums(data, i );
+						}
+						
+					}else{ 
+
 					// album by album get the links and then process the albums 
 					// one by one
+
+
+
 							try{ // test if album as a cover photo
 									var coverPhotograph = 'https://graph.facebook.com/'+data.data[i].cover_photo;
 							
@@ -61,10 +84,19 @@
 								success:function(coverPhotoData){
 								    //determine if the data has a cover photo field 
 								    // if not increment the counter and check the next photo
-								    try{					    										
-										var imgsrc =  coverPhotoData.images[5].source;
+
+								    if( !(data.data[i].type ==='normal' || data.data[i].type ==='mobile') ){
+								    	//skipe this album as it is of type cover, wall and profile
+								    	i++;
+								    	getAlbums(data, i );
+								    }
+
+								    try{	
+  										 								    				    										
+										var imgsrc =  coverPhotoData.picture;
+
 										var albumname = data.data[i].name;
-										//console.log(albumname+"=>"+imgsrc);
+
 										var photoslink = "";
 								        //start the row if the item count less than 1
 								        if (rowItemscnt == 1)
@@ -82,14 +114,14 @@
 
 										//print output 
 										if(rowItemscnt==4){
-													curhtml +="<div class=\"threecol "+rowItemscnt +" last\"><a class=\"albumlink\" href=\""+photoslink+ "\" ><div class=\"albumthumb\" style=\"background-image: url("+ imgsrc +") \" /></div></a><br/><a class=\"albumlinktitle\"  href=\""+photoslink+ "\">"+ albumname +"</a></div> <!-- last col -->";
+													curhtml +="<div class=\"threecol "+rowItemscnt +" last\"><a class=\"albumlink\" href=\""+photoslink+ "\" ><img class=\"albumthumb\" src=\""+ imgsrc +" \" /></a><br/><a class=\"albumlinktitle\"  href=\""+photoslink+ "\">"+ albumname +"</a></div> <!-- last col -->";
 													curhtml += " </div> <!-- End Row Loop-->" ;
 													// output row
 													addhtml(curhtml);
-													 curhtml ="";
+													curhtml ="";
 													rowItemscnt = 0;
 										}else{
-													curhtml +="<div class=\"threecol "+rowItemscnt +" \"><a class=\"albumlink\"  href=\""+photoslink+ "\" ><div class=\"albumthumb\" style=\"background-image: url("+ imgsrc +") \" /></div></a><br/><a class=\"albumlinktitle\"  href=\""+photoslink+ "\">"+ albumname +"</a></div>";
+													curhtml +="<div class=\"threecol "+rowItemscnt +" \"><a class=\"albumlink\"  href=\""+photoslink+ "\" ><img class=\"albumthumb\" src=\""+ imgsrc +" \" /></a><br/><a class=\"albumlinktitle\"  href=\""+photoslink+ "\">"+ albumname +"</a></div>";
 										}
 										
 										// print out current image block
@@ -139,8 +171,14 @@
 										}
 								    }catch(err){ // End of 25 Albums catch
 								    		i++;
-								    		//console.log("parent catch: "+err);
-											getAlbums(data, i );
+								    		console.log(err);
+								    		if(	!( i in obj) ){
+								    			jQuery('#fbloader').remove();
+								    		} else{
+								    			// get the next batch of albums
+								    			getAlbums(data, i );
+								    		}
+											
 								    }								    
 
 							
@@ -152,6 +190,7 @@
 							}); 
 						
 						//process the data from facebook
+						}
 							
 					}
 					
