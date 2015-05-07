@@ -1,10 +1,9 @@
 === Plugin Name ===
 Contributors: dwainm
-Donate link: http://dwainm.wordpress.com/donate/
 Tags: Facebook albums,Facebook gallery
-Requires at least: 3.X
-Tested up to: 3.5.1
-Stable tag: 0.3
+Requires at least: 4.2.2
+Tested up to: 4.2.2
+Stable tag: 0.5
 License: GPLv2 or later
 
 
@@ -80,16 +79,22 @@ You can also submit issues on github [https://github.com/dwainm/Facebook-Albums-
 1. Will be uploaded.
 
 == Changelog ==
-= 0.1 =
-* Initial release plugin
-* Get the albums from Facebook
-* Display all albums with a link to its photos via short code
 
-= 0.2 =
-* Updated plugin readme file.
-* Added ability to load specific album only
-* Bug Fixes:
-* * fixed loading images and lightbox issues as mentioned here: http://wordpress.org/support/topic/lightbox-13?replies=21
+= 0.5 =
+* Fix - Loading duplicate albums
+* Fix - Problem with more tha 18 albums
+* Fix - Slow loading times
+* Dev - use react views for faster ui updates and move data logic into separate model file.
+* Dev - organize file structure
+* Dev - use WP settings API
+
+= 0.4 =
+* Feature - Added aliasses for the albums shortcode for easier useage: [facbook_albums] and [fbalbumssync]
+* Feature -   Credit : https://github.com/imjayson
+* Fix - under the hood code improvements:
+	  > use localize script instead of printing echoing default javascript values
+	  > more meaning file names for the all albums and single album view
+	  > moved the javascript into external files
 
 = 0.3 =
 * Fixed lightbox photo not working.
@@ -98,10 +103,24 @@ You can also submit issues on github [https://github.com/dwainm/Facebook-Albums-
 * Removed styling from the back to album link
 * Removed profile, wall and cover albums
 
+= 0.2 =
+* Updated plugin readme file.
+* Added ability to load specific album only
+* Bug Fixes:
+* * fixed loading images and lightbox issues as mentioned here: http://wordpress.org/support/topic/lightbox-13?replies=21
+
+= 0.1 =
+* Initial release plugin
+* Get the albums from Facebook
+* Display all albums with a link to its photos via short code
+
+
+
+
 == Upgrade Notice ==
 
 = 0.3 =
-* Fixed lightbox photo not working.
+* Add
 * Fixed photo count to ensure that all album photo's are displayed.
 * Change the lightbox script and loading to version 2 and update the links to reflect the new plugin
 * Removed styling from the back to album link
